@@ -48,7 +48,7 @@
                     class="toggle-password"
                     onclick="togglePassword()"
                     aria-label="Show or hide password">
-                    Show
+                    Shows
                 </button>
             </div>
         </div>
