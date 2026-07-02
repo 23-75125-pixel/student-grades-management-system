@@ -12,7 +12,7 @@
 <div class="login-container">
 
     <h1>🎓 Student Grade System</h1>
-    <p>Please login to continue</p>
+    <p>Please Login to Continue</p>
 
     <form action="dashboard.php" method="post" onsubmit="return validateForm()">
 
