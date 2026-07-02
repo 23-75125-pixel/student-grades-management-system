@@ -36,7 +36,7 @@
                 required
             >
 
-            <button type="button" onclick="togglePassword()">Show</button>
+            <button type="button" onclick="togglePassword()">Shows password</button>
         </div>
 
         <div class="options">
