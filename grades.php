@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade Management</title>
-
+    <title>Student Grade Management System - Grade Management</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="container">
 
-    <h1>Grade Management</h1>
+    <h1>Student Grade Management System</h1>
 
     <input
         type="text"
@@ -20,10 +19,11 @@
         onkeyup="searchStudent()"
     >
 
-    <button onclick="sortTable()">Sort A-Z</button>
-    <button onclick="resetSearch()">Reset</button>
+    <button type="button" onclick="sortTable()">Sort A-Z</button>
+    <button type="button" onclick="resetSearch()">Reset</button>
 
-    <p>Total Students:
+    <p>
+        Total Students:
         <span id="studentCount">5</span>
     </p>
 
@@ -84,6 +84,8 @@
         </tr>
 
     </table>
+
+    <a href="dashboard.php" class="btn">Back to Dashboard</a>
 
 </div>
 

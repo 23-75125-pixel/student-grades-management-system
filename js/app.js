@@ -1,85 +1,131 @@
 window.onload = function () {
-    let table = document.getElementById("gradeTable");
+    const table = document.getElementById("gradeTable");
 
     if (table) {
         for (let i = 1; i < table.rows.length; i++) {
-            let math = Number(table.rows[i].cells[1].innerHTML);
-            let science = Number(table.rows[i].cells[2].innerHTML);
-            let english = Number(table.rows[i].cells[3].innerHTML);
+            const math = Number(table.rows[i].cells[1].textContent);
+            const science = Number(table.rows[i].cells[2].textContent);
+            const english = Number(table.rows[i].cells[3].textContent);
 
-            let average = ((math + science + english) / 3).toFixed(2);
-            table.rows[i].cells[4].innerHTML = average;
+            const average = ((math + science + english) / 3).toFixed(2);
 
-            if (Number(average) >= 75) {
-                table.rows[i].cells[5].innerHTML = "PASS";
+            table.rows[i].cells[4].textContent = average;
+
+            if (average >= 75) {
+                table.rows[i].cells[5].textContent = "PASS";
                 table.rows[i].cells[5].style.color = "green";
             } else {
-                table.rows[i].cells[5].innerHTML = "FAIL";
+                table.rows[i].cells[5].textContent = "FAIL";
                 table.rows[i].cells[5].style.color = "red";
             }
         }
+
+        updateStudentCount();
     }
 };
 
 function togglePassword() {
-    let password = document.getElementById("password");
+    const password = document.getElementById("password");
+
     if (!password) return;
 
-    password.type = password.type === "password" ? "text" : "password";
-}
-
-function searchStudent() {
-    let input = document.getElementById("search");
-    let table = document.getElementById("gradeTable");
-    if (!input || !table) return;
-
-    let filter = input.value.toUpperCase();
-    let tr = table.getElementsByTagName("tr");
-
-    for (let i = 1; i < tr.length; i++) {
-        let td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            let txt = td.textContent || td.innerText;
-            tr[i].style.display = txt.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-        }
+    if (password.type === "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
     }
 }
 
+function searchStudent() {
+    const input = document.getElementById("search");
+    const table = document.getElementById("gradeTable");
+
+    if (!input || !table) return;
+
+    const filter = input.value.toUpperCase();
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        const firstCell = rows[i].getElementsByTagName("td")[0];
+
+        if (firstCell) {
+            const value = firstCell.textContent || firstCell.innerText;
+
+            if (value.toUpperCase().indexOf(filter) > -1) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+
+    updateStudentCount();
+}
+
 function resetSearch() {
-    let input = document.getElementById("search");
+    const input = document.getElementById("search");
+
     if (!input) return;
+
     input.value = "";
     searchStudent();
 }
 
 function sortTable() {
-    let table = document.getElementById("gradeTable");
+    const table = document.getElementById("gradeTable");
+
     if (!table) return;
 
-    let rows = Array.from(table.rows).slice(1);
+    const rows = Array.from(table.rows).slice(1);
+
     rows.sort(function (a, b) {
-        return a.cells[0].innerHTML.localeCompare(b.cells[0].innerHTML);
+        return a.cells[0].textContent.localeCompare(b.cells[0].textContent);
     });
-    rows.forEach(row => table.appendChild(row));
+
+    rows.forEach(function (row) {
+        table.appendChild(row);
+    });
+
+    updateStudentCount();
+}
+
+function updateStudentCount() {
+    const table = document.getElementById("gradeTable");
+    const counter = document.getElementById("studentCount");
+
+    if (!table || !counter) return;
+
+    let count = 0;
+
+    for (let i = 1; i < table.rows.length; i++) {
+        if (table.rows[i].style.display !== "none") {
+            count++;
+        }
+    }
+
+    counter.textContent = count;
 }
 
 function validateForm() {
-    let username = document.getElementById("username");
-    let password = document.getElementById("password");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+
     if (!username || !password) return false;
 
-    let usernameValue = username.value.trim();
-    let passwordValue = password.value.trim();
+    const usernameValue = username.value.trim();
+    const passwordValue = password.value.trim();
 
     if (usernameValue.length < 4) {
         alert("Username must be at least 4 characters.");
+        username.focus();
         return false;
     }
 
     if (passwordValue.length < 6) {
         alert("Password must be at least 6 characters.");
+        password.focus();
         return false;
     }
 
     return true;
-}
+};
